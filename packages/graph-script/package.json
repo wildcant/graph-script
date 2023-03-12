@@ -1,0 +1,19 @@
+{
+  "name": "@graph-script/core",
+  "version": "1.0.0",
+  "author": "Wilmer Cantillo",
+  "type": "module",
+  "source": "src/index.js",
+  "main": "dist/main.js",
+  "module": "dist/module.js",
+  "scripts": {
+    "dev": "node src/index.js",
+    "dev:dashboard": "npx serve ."
+  },
+  "dependencies": {
+    "ramda": "^0.28.0"
+  },
+  "devDependencies": {
+    "parcel": "^2.8.3"
+  }
+}

@@ -1,11 +1,13 @@
 {
-  "name": "dashboard",
+  "name": "graph-script",
   "author": "Wilmer Cantillo",
   "scripts": {
-    "dev": "npx serve .."
+    "clean": "find . -name node_modules -o -name dist -type d -prune | xargs rm -rf"
   },
   "devDependencies": {
+    "@babel/core": "^7.21.0",
     "@babel/eslint-parser": "^7.19.1",
+    "@babel/plugin-syntax-jsx": "^7.18.6",
     "eslint": "^8.36.0",
     "standard": "^17.0.0"
   },
@@ -19,7 +21,12 @@
     "parserOptions": {
       "requireConfigFile": false,
       "ecmaVersion": "latest",
-      "sourceType": "module"
+      "sourceType": "module",
+      "babelOptions": {
+        "plugins": [
+          "@babel/plugin-syntax-jsx"
+        ]
+      }
     },
     "rules": {
       "space-before-function-paren": "off",
@@ -36,5 +43,6 @@
     "printWidth": 120,
     "semi": false,
     "jsxSingleQuote": true
-  }
+  },
+  "packageManager": "pnpm@7.29.1"
 }

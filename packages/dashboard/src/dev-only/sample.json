@@ -1,0 +1,53 @@
+[
+  {
+    "id": "6ec19fc7.a32ae",
+    "name": "a",
+    "type": "constant",
+    "value": 3,
+    "x": 130,
+    "y": 165,
+    "inputs": 0,
+    "outputs": 1,
+    "width": 100,
+    "height": 36,
+    "wires": ["a7f64dbf.3e27b"]
+  },
+  {
+    "id": "1644e138.f8d1ef",
+    "name": "b",
+    "type": "constant",
+    "value": 5,
+    "x": 130,
+    "y": 260,
+    "inputs": 0,
+    "outputs": 1,
+    "width": 100,
+    "height": 36,
+    "wires": ["a7f64dbf.3e27b"]
+  },
+  {
+    "id": "a7f64dbf.3e27b",
+    "name": "c",
+    "type": "function",
+    "fn": "sum",
+    "x": 275,
+    "y": 206,
+    "inputs": 2,
+    "outputs": 1,
+    "width": 100,
+    "height": 36,
+    "params": ["a", "b"],
+    "wires": ["1644e138.f8d1eg"]
+  },
+  {
+    "id": "1644e138.f8d1eg",
+    "name": "msg",
+    "type": "debug",
+    "x": 440,
+    "y": 203,
+    "width": 100,
+    "height": 36,
+    "inputs": 1,
+    "outputs": 0
+  }
+]

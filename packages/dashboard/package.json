@@ -1,0 +1,26 @@
+{
+  "name": "@graph-script/dashboard",
+  "scripts": {
+    "postinstall": "mkdir dist && cp -r public dist/public",
+    "dev": "parcel src/index.html --open",
+    "build": "parcel build src/index.html"
+  },
+  "author": "Wilmer Cantillo",
+  "dependencies": {
+    "@graph-script/core": "workspace:*",
+    "@preact/signals": "^1.1.3",
+    "preact": "^10.13.1",
+    "ramda": "^0.28.0"
+  },
+  "devDependencies": {
+    "parcel": "^2.8.3",
+    "postcss": "^8.4.21",
+    "postcss-nested": "^6.0.1"
+  },
+  "alias": {
+    "react": "preact/compat",
+    "react-dom/test-utils": "preact/test-utils",
+    "react-dom": "preact/compat",
+    "react/jsx-runtime": "preact/jsx-runtime"
+  }
+}
