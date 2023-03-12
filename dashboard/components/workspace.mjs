@@ -116,6 +116,7 @@ export function Workspace() {
   const linksRefs = useRef(null)
   const eventsLayer = useRef(null)
   const focusedElement = useRef(null)
+  const dragging = useRef({ nodeId: null, offset: new Map() })
 
   const [nodes, setNodes] = useState([])
   const [links, setLinks] = useState([])
@@ -187,7 +188,7 @@ export function Workspace() {
     loadGraph(graphFlow)
 
     // Focus/unfocus nodes or links on click.
-    window.addEventListener('click', (e) => {
+    window.addEventListener('mousedown', (e) => {
       const flowNodes = Object.values(Object.fromEntries(getNodesRefs()))
       const flowLinks = Object.values(Object.fromEntries(getLinksRefs()))
       const clickableElements = flowNodes.concat(flowLinks)
@@ -219,6 +220,72 @@ export function Workspace() {
         } else if (el.type === 'link') {
           setLinks((s) => s.filter((l) => l.id !== el.id))
         }
+      }
+    })
+
+    /** Mouse position within the eventsLayer. */
+    const getMousePosition = (e) => {
+      const containerDomMatrix = eventsLayer.current.getScreenCTM()
+
+      if (R.isNil(containerDomMatrix)) return { x: e.clientX, y: e.clientY }
+
+      return {
+        x: (e.clientX - containerDomMatrix.e) / containerDomMatrix.a,
+        y: (e.clientY - containerDomMatrix.f) / containerDomMatrix.d
+      }
+    }
+
+    const handleMouseMove = (e) => {
+      const { nodeId, offset } = dragging.current
+      if (!nodeId) return
+
+      const mousePosition = getMousePosition(e)
+      const dx = mousePosition.x - offset.get('x')
+      const dy = mousePosition.y - offset.get('y')
+
+      // Allow dragging only withing the container boundaries.
+      const boundaries = { x: eventsLayer.current.offsetHeight, y: eventsLayer.current.offsetWidth }
+      if (dx < 0 || dx > boundaries.x || dy < 0 || dy > boundaries.y) return
+
+      setNodes((ns) => {
+        const nodeIndex = ns.findIndex((n) => n.id === nodeId)
+        const node = ns[nodeIndex]
+        if (!node) return ns
+
+        const updatedNode = { ...node, x: dx, y: dy }
+
+        // Update node's links position.
+        setLinks((ls) =>
+          ls
+            .filter((l) => l.inputNode.id !== nodeId && l.outputNode.id !== nodeId)
+            .concat(ls.filter((l) => l.inputNode.id === nodeId).map((l) => ({ ...l, inputNode: updatedNode })))
+            .concat(ls.filter((l) => l.outputNode.id === nodeId).map((l) => ({ ...l, outputNode: updatedNode })))
+        )
+
+        // Update node position.
+        return ns
+          .slice(0, nodeIndex)
+          .concat([updatedNode])
+          .concat(ns.slice(nodeIndex + 1, ns.length))
+      })
+    }
+
+    // Enable nodes dragging.
+    eventsLayer.current.addEventListener('mousedown', (e) => {
+      const flowNodes = Object.values(Object.fromEntries(getNodesRefs()))
+      const activeNode = flowNodes.find((el) => el.contains(e.target))
+      if (activeNode) {
+        // Set the current offset of the mouse in the screen.
+        const mousePosition = getMousePosition(e)
+        const transform = activeNode.transform.baseVal.getItem(0)
+        dragging.current.nodeId = activeNode.getAttribute('id')
+        dragging.current.offset.set('x', mousePosition.x - transform.matrix.e)
+        dragging.current.offset.set('y', mousePosition.y - transform.matrix.f)
+
+        window.addEventListener('mousemove', handleMouseMove)
+        window.addEventListener('mouseup', () => window.removeEventListener('mousemove', handleMouseMove), {
+          once: true
+        })
       }
     })
   }, [])
