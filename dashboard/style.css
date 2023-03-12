@@ -1,0 +1,75 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+}
+
+main {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+}
+
+/* Workspace */
+.workspace-container {
+  overflow: auto;
+}
+
+.workspace {
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.workspace-grid {
+  fill: none;
+  stroke: #eee;
+  stroke-width: 1px;
+  shape-rendering: crispEdges;
+}
+
+/* Node */
+.node {
+  cursor: move;
+  stroke-width: 1px;
+}
+
+.node.focus rect.node-background {
+  stroke-width: 2;
+  stroke: #ff7f0e;
+}
+
+.node-port {
+  fill: #d9d9d9;
+  stroke: #999;
+  stroke-width: 1px;
+  cursor: crosshair;
+}
+
+.node-icon-divider {
+  fill: #000;
+}
+
+.node-icon-background {
+  fill: #000;
+}
+
+.node-label {
+  font-size: 14px;
+  user-select: none;
+  fill: #333;
+}
+
+/* Flow Links */
+
+.flow-link-line {
+  stroke: #999;
+  stroke-width: 3;
+  fill: none;
+}
+
+.flow-link.focus .flow-link-line {
+  stroke: #ff7f0e;
+}

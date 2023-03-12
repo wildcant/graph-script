@@ -1,0 +1,40 @@
+{
+  "name": "dashboard",
+  "author": "Wilmer Cantillo",
+  "scripts": {
+    "dev": "npx serve .."
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.19.1",
+    "eslint": "^8.36.0",
+    "standard": "^17.0.0"
+  },
+  "eslintConfig": {
+    "extends": "./node_modules/standard/eslintrc.json",
+    "env": {
+      "browser": true,
+      "es2021": true
+    },
+    "parser": "@babel/eslint-parser",
+    "parserOptions": {
+      "requireConfigFile": false,
+      "ecmaVersion": "latest",
+      "sourceType": "module"
+    },
+    "rules": {
+      "space-before-function-paren": "off",
+      "no-unused-vars": "warn",
+      "no-shadow": "error"
+    },
+    "globals": {
+      "R": "readonly"
+    }
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "none",
+    "printWidth": 120,
+    "semi": false,
+    "jsxSingleQuote": true
+  }
+}
