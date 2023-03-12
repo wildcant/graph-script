@@ -16,6 +16,15 @@ importers:
       eslint: 8.36.0
       standard: 17.0.0
 
+  packages/core:
+    specifiers:
+      parcel: ^2.8.3
+      ramda: ^0.28.0
+    dependencies:
+      ramda: 0.28.0
+    devDependencies:
+      parcel: 2.8.3
+
   packages/dashboard:
     specifiers:
       '@graph-script/core': workspace:*
@@ -26,7 +35,7 @@ importers:
       preact: ^10.13.1
       ramda: ^0.28.0
     dependencies:
-      '@graph-script/core': link:../graph-script
+      '@graph-script/core': link:../core
       '@preact/signals': 1.1.3_preact@10.13.1
       preact: 10.13.1
       ramda: 0.28.0
@@ -34,15 +43,6 @@ importers:
       parcel: 2.8.3_postcss@8.4.21
       postcss: 8.4.21
       postcss-nested: 6.0.1_postcss@8.4.21
-
-  packages/graph-script:
-    specifiers:
-      parcel: ^2.8.3
-      ramda: ^0.28.0
-    dependencies:
-      ramda: 0.28.0
-    devDependencies:
-      parcel: 2.8.3
 
 packages:
 
